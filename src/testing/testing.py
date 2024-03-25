@@ -8,7 +8,7 @@ sys.path.append('./src/metrics')
 sys.path.append('./src/metrics/plot/')
 sys.path.append('./src/metrics/acc/')
 
-from plot import plot_metrics_loss, plot_metrics_acc
+from plot import plot_metrics_acc_batch, plot_metrics_loss_batch
 import acc
 
 def test(model, val_batches, device, path, modelname):
@@ -16,7 +16,8 @@ def test(model, val_batches, device, path, modelname):
     val_loss, accuracy = 0, 0
     loss_func = torch.nn.CrossEntropyLoss().to(device)
 
-
+    loss_per_batch = []
+    acc_per_batch = []  
     loss_test = []
     acc_test = []
     eer_test= []
@@ -31,18 +32,19 @@ def test(model, val_batches, device, path, modelname):
             images, labels = images.to(device), labels.to(device)
             predictions = model(images).to(device)
             loss = loss_func(predictions, labels)
+            val_loss = loss
+            accuracy = acc.accuracy_fn(y_true=labels, y_pred=predictions.argmax(dim=1))
+            # Save losses & plot
+            loss_per_batch.append(val_loss.item())
+            plot_metrics_loss_batch(modelname, loss_per_batch, False)
+            acc_per_batch.append(accuracy)
+            plot_metrics_acc_batch(modelname, acc_per_batch, False)
+            
             val_loss += loss
             accuracy += acc.accuracy_fn(y_true=labels, y_pred=predictions.argmax(dim=1))
-
         val_loss /= len(val_batches)
         accuracy /= len(val_batches)
-
-        # Save losses & plot
-        loss_test.append(val_loss.item())
-        plot_metrics_loss(modelname, loss_test)
-        acc_test.append(accuracy)
-        plot_metrics_acc(modelname, acc_test)
-
+        
 
         print( "Loss: ", val_loss, "Acc: ",accuracy)
 

@@ -112,42 +112,37 @@ def project_main (device, resnet18, resnet50):
         print("### Normal Testing on ResNet18 ###")
         modelname_resnet18_test = "_resnet18_test_"
 
-        #test(resnet18, val_batches, device, path_resnet18, modelname_resnet18_test)
+        test(resnet18, val_batches, device, path_resnet18, modelname_resnet18_test)
 
         print("### Adversarial Attack on ResNet18 ###")
         modelname_resnet18_test_aa = "_resnet18_test_aa_"
-        #adversarialattack(path_resnet18, val_batches, device, resnet18, modelname_resnet18_test_aa)
+        adversarialattack(path_resnet18, val_batches, device, resnet18, modelname_resnet18_test_aa)
 
         print("### Testing ResNet50 ###")
         print("### Normal Testing on ResNet50 ###")
 
         modelname_resnet50_test = "_resnet50_test_"
-        #test(resnet50, val_batches, device, path_resnet50, modelname_resnet50_test)
+        test(resnet50, val_batches, device, path_resnet50, modelname_resnet50_test)
 
         print("### Adversarial Attack on ResNet50 ###")
 
         modelname_resnet50_test_aa = "_resnet50_test_aa_"
-        #adversarialattack(path_resnet50, val_batches, device, resnet50, modelname_resnet50_test_aa)
-
+        adversarialattack(path_resnet50, val_batches, device, resnet50, modelname_resnet50_test_aa)
 
         # Defense Method
         print("### Spatial Smoothing ###")
         print("### ResNet18 ###")
-        #spatialsmoothingTest(path_resnet18, val_batches, device, resnet18)
+        spatialsmoothingTest(path_resnet18, val_batches, device, resnet18)
 
         print("### ResNet50 ###")
-        #spatialsmoothingTest(path_resnet50, val_batches, device, resnet50)
+        spatialsmoothingTest(path_resnet50, val_batches, device, resnet50)
 
 
         print("### Adversarial Training ###")
-        print("### Generate Data for Adversarial Training on ResNet18 ###")
+        #print("### Generate Data for Adversarial Training on ResNet18 ###")
         filename_resnet18 = "./data/data_advtrain/datar18.tar"
-
-        #gen_adv(train_batches, device, resnet18, path_resnet18, filename_resnet18)
-
-        print("### Generate Data for Adversarial Training on ResNet50 ###")
+        #print("### Generate Data for Adversarial Training on ResNet50 ###")
         filename_resnet50 = "./data/data_advtrain/datar50.tar"
-        #gen_adv(train_batches, device, resnet50, path_resnet50, filename_resnet50)
 
         print("### ResNet18 ###")
 
@@ -163,7 +158,7 @@ def project_main (device, resnet18, resnet50):
 
         modelname_resnet50_adv_train = "_resnet50_adv_train_"
 
-        #AdversarialTraining(resnet50, train_batches, device, path_resnet50_adv_train, modelname_resnet50_adv_train)
+        AdversarialTraining(resnet50, train_batches, device, path_resnet50_adv_train, modelname_resnet50_adv_train, filename_resnet50 )
 
 
         print("### Testing ###")

@@ -241,7 +241,7 @@ def dataset(device):
 
     # train / test split
     val_ratio = 0.2
-    val_size = int(0.9 * len(dataset))
+    val_size = int(val_ratio * len(dataset))
     train_size = len(dataset) - val_size
     train_dataset, val_dataset = torch.utils.data.random_split(dataset, [train_size, val_size])
     print(f"{train_size} images for training, {val_size} images for validation")

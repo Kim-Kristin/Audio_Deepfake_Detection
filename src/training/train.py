@@ -32,7 +32,6 @@ def train(model, train_batches, device, path, modelname):
             train_loss = 0
             accuracy = 0
             for i, (images, labels) in tqdm(enumerate(train_batches,0)):
-                print(len(labels))
                 images, labels = images.to(device), labels.to(device)
                 predictions = model(images).to(device)
                 loss = loss_func(predictions, labels)
@@ -44,9 +43,6 @@ def train(model, train_batches, device, path, modelname):
 
             train_loss /= len(train_batches)
             accuracy /= len(train_batches)
-            #print("training loss", train_loss)
-            #print("training Acc", accuracy)
-
 
         # Save losses & plot
         loss_per_epoch.append(train_loss.item())

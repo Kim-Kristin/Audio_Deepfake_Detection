@@ -1,8 +1,16 @@
-
-#https://foolbox.jonasrauber.de/guide/examples.html
 import torch
 import torchattacks
 from tqdm import tqdm
+
+import sys
+sys.path.append('./src')
+sys.path.append('./src/metrics')
+sys.path.append('./src/metrics/plot/')
+sys.path.append('./src/metrics/acc/')
+
+from plot import plot_metrics_acc_batch, plot_metrics_loss_batch
+
+import acc
 
 # Calculates accuracy between truth labels and predictions.
 def accuracy_fn(y_true, y_pred):
@@ -22,7 +30,8 @@ def adversarialattack(model_path, testloader, device, model, modelname):
 
     loss_test = []
     acc_test = []
-
+    loss_per_batch = []
+    acc_per_batch = []
     i = 1
     loss_func = torch.nn.CrossEntropyLoss().to(device)
     model.eval()
@@ -36,9 +45,18 @@ def adversarialattack(model_path, testloader, device, model, modelname):
 
         with torch.no_grad():
             predictions_adv = model(adv_images).to(device)
+        val_loss = loss_func(predictions_adv, labels)
+        #val_acc_batch = torch.eq(labels, predictions_adv.argmax(dim=1)).sum().item()
+        #print("Batch",i,":" ,val_acc_batch)
+        val_accuracy = accuracy_fn(y_true=labels, y_pred=predictions_adv.argmax(dim=1))
+       
+        # Save losses, accuarcy & plot
+        loss_per_batch.append(val_loss.item())
+        plot_metrics_loss_batch(modelname, loss_per_batch,  True)
+        acc_per_batch.append(val_accuracy)
+        plot_metrics_acc_batch(modelname, acc_per_batch, True)
+        
         val_loss += loss_func(predictions_adv, labels)
-        val_acc_batch = torch.eq(labels, predictions_adv.argmax(dim=1)).sum().item()
-        print("Batch",i,":" ,val_acc_batch)
         val_accuracy += accuracy_fn(y_true=labels, y_pred=predictions_adv.argmax(dim=1))
         i+=1
     val_loss /= len(testloader)
