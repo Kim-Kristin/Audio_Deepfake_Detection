@@ -1,7 +1,5 @@
 import os
-from torchvision.utils import save_image  # Speichern von Bildern
 import matplotlib.pyplot as plt
-from torchvision.utils import make_grid
 
 def plot_metrics_loss(modelname,losses):
     path = "./data/outputs/"

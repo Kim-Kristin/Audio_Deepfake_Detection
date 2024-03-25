@@ -19,11 +19,8 @@ import matplotlib.pyplot as plt
 from tqdm.auto import tqdm
 # Import default_timer function from timeit for measuring time taken for model training
 from timeit import default_timer as timer
-
-
 import os
 
-import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import librosa
@@ -31,8 +28,6 @@ import librosa
 import seaborn as sns
 from tqdm import tqdm
 
-import torch
-import torch.nn as nn
 from torch.optim import Adam
 #import torchaudio
 from scipy.io import wavfile
@@ -98,8 +93,6 @@ import warnings
 warnings.filterwarnings('ignore')
 
 #Variables
-#device = utils.get_device()
-#print(device)
 
 NUM_WORKERS = 0 # number of worker used when loading data into dataloader
 DATASET_PATH = './data/spec/' # path of our spectrogram dataset
@@ -117,9 +110,6 @@ transform=transforms.Compose([transforms.Resize((32,32)),
                                   transforms.ToTensor(),
                                   transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
                                   ])
-
-
-
 
 def envelope(y, rate, threshold):
     mask = []
@@ -202,9 +192,7 @@ def dataset(device):
                 signal, rate = librosa.load(path_audio+f+'.flac', sr=16000)
                 mask = envelope(signal, rate, 0.0005)
                 wavfile.write(filename=path_clean_b+f+'.flac', rate=rate, data=signal[mask])
-
-
-
+                
     input_path_b = path_clean_b
     input_path_s = path_clean_s
 
@@ -283,48 +271,3 @@ def accuracy_fn(y_true, y_pred):
     correct = torch.eq(y_true, y_pred).sum().item()
     acc = (correct / len(y_pred)) * 100
     return acc
-
-# The core function for training the CNN
-"""def train_neural_net(epochs, model, loss_func, optimizer, train_batches, val_batches):
-    final_accuracy = 0
-    for epoch in range(epochs):
-        # training mode
-        model.train()
-        with torch.enable_grad():
-            train_loss = 0
-            for images, labels in tqdm(train_batches):
-                images, labels = images.to(device), labels.to(device)
-                predictions = model(images).to(device)
-                loss = loss_func(predictions, labels)
-                #rint(loss)
-                train_loss += loss
-                optimizer.zero_grad()
-                loss.backward()
-                optimizer.step()
-            train_loss /= len(train_batches)
-            print("training loss", train_loss, epoch)
-    PATH = './model/resnet50.pth'
-    torch.save({"state_dict": model.state_dict()}, PATH)"""
-
-
-# evaluation mode
-"""def validation(model, path, val_batches, loss_func):
-        val_loss, val_accuracy = 0, 0
-
-        model_point = torch.load(path, map_location=device)
-        model = model
-        model.load_state_dict(model_point["state_dict"])
-        model.eval()
-        with torch.no_grad():
-            for images, labels in tqdm(val_batches):
-                images, labels = images.to(device), labels.to(device)
-
-                predictions = model(images).to(device)
-                val_loss += loss_func(predictions, labels)
-                val_accuracy += accuracy_fn(y_true=labels, y_pred=predictions.argmax(dim=1))
-            val_loss /= len(val_batches)
-            val_accuracy /= len(val_batches)
-        final_accuracy = val_accuracy
-        print(val_accuracy)
-        return val_accuracy
-"""
