@@ -93,7 +93,7 @@ def project_main (device, resnet18, resnet50):
     user_input = int(input("Model:"))
     if user_input == 0:
         cls()
-        # call ResNet18 and ResNet50
+        #call ResNet18 and ResNet50
 
         print("### Loading Dataset ### ")
         train_batches, val_batches = dataloadernew.dataset(device)
@@ -101,12 +101,12 @@ def project_main (device, resnet18, resnet50):
         print("### Training ResNet18 ###")
         path_resnet18 = "./model/resnet18.pth"
         modelname_resnet18 = "_resnet18_"
-        #train(resnet18, train_batches, device, path_resnet18, modelname_resnet18)
+        train(resnet18, train_batches, device, path_resnet18, modelname_resnet18)
 
         print("### Training Resnet50 ###")
         path_resnet50 = "./model/resnet50.pth"
         modelname_resnet50 = "_resnet50_"
-        #train(resnet50, train_batches, device, path_resnet50, modelname_resnet50)
+        train(resnet50, train_batches, device, path_resnet50, modelname_resnet50)
 
         print("### Testing ResNet18 ###")
         print("### Normal Testing on ResNet18 ###")
@@ -170,7 +170,8 @@ def project_main (device, resnet18, resnet50):
         print("### Testing with Adversarial Attack on ResNet18 ###")
         modelname_resnet18_test_at_aa = "_resnet18_test_at_aa_"
         adversarialattack(path_resnet18_adv_train, val_batches, device, resnet18, modelname_resnet18_test_at_aa)
-
+        
+        
         print("### Normal Testing on ResNet50 ###")
 
         modelname_resnet50_at_test = "_resnet50_at_test_"
