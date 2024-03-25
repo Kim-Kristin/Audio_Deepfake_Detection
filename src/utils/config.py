@@ -1,0 +1,34 @@
+import torch
+import random
+
+
+class config:
+    seed=2022
+    num_fold = 5
+    sample_rate= 6000
+    hop_length=512
+    n_mels=64
+    duration=5
+    num_classes = 2
+    batch_size = 32
+    model_name = 'resnet101'
+    epochs = 10
+    #device = 'cuda' if torch.cuda.is_available() else 'cpu'
+    learning_rate = 1e-4
+    nfilt=26
+    nfeat=13
+    nfft=512
+    rate=16000
+    step = int (rate/10)
+    num_workers = 0
+    randomseed = 999
+    # manualSeed = random.randint(1, 10000) # use if you want new results
+    random.seed(randomseed)
+    torch.manual_seed(randomseed)
+    # Split
+    # Train, Validation, Test
+    TEST_SPLIT = 0.2
+    VALID_SPLIT = 0.0
+    TRAIN_SPLIT = (1-(TEST_SPLIT+VALID_SPLIT))
+
+    SPLIT_AUFTEILUNG = {TRAIN_SPLIT, VALID_SPLIT, TEST_SPLIT}
