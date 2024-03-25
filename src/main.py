@@ -143,7 +143,7 @@ def project_main (device, resnet18, resnet50):
         print("### Generate Data for Adversarial Training on ResNet18 ###")
         filename_resnet18 = "./data/data_advtrain/datar18.tar"
 
-        gen_adv(train_batches, device, resnet18, path_resnet18, filename_resnet18)
+        #gen_adv(train_batches, device, resnet18, path_resnet18, filename_resnet18)
 
         print("### Generate Data for Adversarial Training on ResNet50 ###")
         filename_resnet50 = "./data/data_advtrain/datar50.tar"

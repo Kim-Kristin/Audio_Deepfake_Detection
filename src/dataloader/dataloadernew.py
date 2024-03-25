@@ -11,10 +11,6 @@ from torch import nn
 import torch.multiprocessing
 # Import datasets and transforms modules from torchvision for loading and transforming image datasets
 from torchvision import datasets, transforms
-# Import SummaryWriter module from torch.utils.tensorboard for logging to TensorBoard
-from torch.utils.tensorboard import SummaryWriter
-# Import summary function from torchsummary for displaying model summary
-from torchsummary import summary
 # Import torchvision library for image processing
 import torchvision
 # Import pyplot module from matplotlib for plotting graphs
@@ -40,7 +36,7 @@ import torch.nn as nn
 from torch.optim import Adam
 #import torchaudio
 from scipy.io import wavfile
-from python_speech_features import mfcc, logfbank
+#from python_speech_features import mfcc, logfbank
 import torch.nn.functional as F
 
 from torch.utils.data import DataLoader, Dataset
@@ -88,11 +84,7 @@ sys.path.append('./src/defensemethod/spatialsmoothing')
 sys.path.append('./data')
 sys.path.append('./data/flac')
 
-
-
-
 from new_resnet import ResNet50
-from dataloader.archiv.ResNet_train import resnet_train
 import acc
 import attacks
 import adversarialtraining
@@ -100,7 +92,6 @@ from spatialsmoothing  import median_smoothing, gaussianblur, spatialsmoothingTe
 
 import utils
 from config import config
-from dataloader.archiv import dataloader
 from spectogram import create_spectrogram_images, show_spectrogram, audio
 
 import warnings
