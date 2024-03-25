@@ -7,7 +7,6 @@ import librosa
 import numpy as np
 import torchaudio
 import matplotlib.pyplot as plt
-from PIL import Image
 
 
 SPECTROGRAM_DPI = 90 # image quality of spectrograms
@@ -54,8 +53,6 @@ def create_spectrogram_images(trainloader, label_dir):
 
             fig = plt.figure()
             plt.imsave(f'./data/spectrograms/{label_dir}/spec_img{i}.png', spectrogram_tensor.log2()[0,:,:].numpy(), cmap='viridis')
-
-
 
 class audio():
     def __init__(self, filepath_, hop_lenght = DEFAULT_HOPE_LENGHT, samples_rate = DEFAULT_SAMPLE_RATE):

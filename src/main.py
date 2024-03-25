@@ -87,7 +87,7 @@ def project_main (device, resnet18, resnet50):
     print("7. Adversarial Attack on ResNet50 with Adversarial Training")
     print("8. Adversarial Attack on ResNet50 with Spatial Smoothing")
     print("##########")
-    print("7. Call Checkpoints (Metrics - Losses and FID) of all Models")
+    print("9. Call Checkpoints (Metrics - Losses and Acc) of all Models")
     print("##########")
 
     user_input = int(input("Model:"))
@@ -203,30 +203,29 @@ def project_main (device, resnet18, resnet50):
 
     elif user_input == 7:
         cls()
-        """print("### !!!MAKE SURE THAT TRAINING STATE IS SAVED!!! - State of Metrics ###")
-        print("### Vanilla DCGAN ###")
-        output = torch.load("./outputs/metrics/_Van_GAN_Checkpoint.pth")
+        print("### !!!MAKE SURE THAT TRAINING STATE IS SAVED!!! - State of Metrics ###")
+        print("### ResNet18 ###")
+        modelname_resnet18 = "_resnet18_"
+
+        output = torch.load("./model/metrics/"+modelname_resnet18+"Checkpoint.pth")
         print(output)
 
-        print("### Gradient Penalty ###")
-        output = torch.load("./outputs/metrics/_GP_GAN_Checkpoint.pth")
+        print("### ResNet50 ###")
+        modelname_resnet50 = "_resnet50_"
+        output = torch.load("./model/metrics/"+modelname_resnet50+"Checkpoint.pth")
         print(output)
-
-        print("### Weight Clipping (WGAN) ###")
-        output = torch.load("./outputs/metrics/_Clipping_GAN_Checkpoint.pth")
+        
+        print("### ResNet18 with Adversarial Training ###")
+        modelname_resnet18_adv_train = "_resnet18_adv_train_"
+        output = torch.load("./model/metrics/"+modelname_resnet18_adv_train+"Checkpoint.pth")
         print(output)
-
-        print("### Imbalanced Training (WGAN-GP) ###")
-        output = torch.load("./outputs/metrics/_IT_GAN_Checkpoint.pth")
+    
+    
+        print("### ResNet50 with Adversarial Training ###")
+        modelname_resnet50_adv_train = "_resnet50_adv_train_"
+        output = torch.load("./model/metrics/"+modelname_resnet50_adv_train+"Checkpoint.pth")
         print(output)
-
-        print("### Layer-Output Normalization (Instance Normalization) ###")
-        output = torch.load("./outputs/metrics/_LN_GAN_Checkpoint.pth")
-        print(output)
-
-        print("### xAI-LDGAN ###")
-        output = torch.load("./outputs/metrics/_LDGAN_Checkpoint.pth")
-        print(output)"""
+        
 
 device = get_device()
 resnet18 = ResNet18().to(device)
