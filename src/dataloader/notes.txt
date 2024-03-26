@@ -1,14 +1,14 @@
 
-# Classification Basics
+
+
 https://pytorch.org/tutorials/intermediate/speech_command_recognition_with_torchaudio.html#define-the-network
-
-
-
-# Inspo
 https://projekter.aau.dk/projekter/files/536740162/MasterThesis_GAPB_2023_06_01.pdf
+https://www.kaggle.com/code/utcarshagrawal/birdclef-audio-pytorch-tutorial/notebook
+https://www.youtube.com/watch?v=gfhx4dr6gJQ&list=PLhA3b2k8R3t2Ng1WW_7MiXeh1pfQJQi_P&index=9
 
 
-# https://www.kaggle.com/code/utcarshagrawal/birdclef-audio-pytorch-tutorial/notebook
+#Dataset 
 
-
+https://zenodo.org/records/4835108
+https://github.com/piotrkawa/audio-deepfake-adversarial-attacks/blob/main/src/datasets/deepfake_asvspoof_dataset.py
 https://www.youtube.com/watch?v=gfhx4dr6gJQ&list=PLhA3b2k8R3t2Ng1WW_7MiXeh1pfQJQi_P&index=9
