@@ -1,5 +1,5 @@
 
-
+# Design/ Implementation Approach
 
 https://pytorch.org/tutorials/intermediate/speech_command_recognition_with_torchaudio.html#define-the-network
 https://projekter.aau.dk/projekter/files/536740162/MasterThesis_GAPB_2023_06_01.pdf
