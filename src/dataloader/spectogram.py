@@ -70,5 +70,6 @@ class audio():
     def write_disk_spectrogram(self, path, dpi=SPECTROGRAM_DPI) -> None:
         self.plot_spectrogram()
         plt.savefig(path, dpi=dpi, bbox_inches='tight')
+        plt.close(all)
 
 

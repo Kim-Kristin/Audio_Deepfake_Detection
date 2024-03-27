@@ -72,3 +72,4 @@ def show_images(e, x, x_adv, save_dir):
 
     plt.axis("off")
     plt.savefig(os.path.join(save_dir, "result_{}.png".format(e)))
+    plt.close('all')

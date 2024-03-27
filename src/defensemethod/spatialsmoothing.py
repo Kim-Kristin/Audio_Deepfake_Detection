@@ -4,6 +4,16 @@ from scipy import ndimage
 from tqdm import tqdm
 import torchattacks
 
+import sys
+sys.path.append('./src')
+sys.path.append('./src/metrics')
+sys.path.append('./src/metrics/plot/')
+sys.path.append('./src/metrics/acc/')
+
+
+from plot import plot_metrics_acc_batch, plot_metrics_loss_batch
+
+
 def gaussianblur(images):
     #for i , (images, labels) in enumerate(testloader,0):
     transform = torchvision.transforms.GaussianBlur(kernel_size=(5,5), sigma=(0.1, 5.))
@@ -31,7 +41,7 @@ def accuracy_fn(y_true, y_pred):
     acc = (correct / len(y_pred)) * 100
     return acc
 
-def spatialsmoothingTest(model_path,  testloader, device, model):
+def spatialsmoothingTest(model_path,  testloader, device, model, modelname):
     torch.cuda.empty_cache()
 
     testloader = testloader
@@ -40,7 +50,10 @@ def spatialsmoothingTest(model_path,  testloader, device, model):
     model.load_state_dict(model_point["state_dict"])
     val_loss=0
     val_accuracy=0
-    i = 1
+    
+    loss_per_batch = []
+    acc_per_batch = []
+    
     loss_func = torch.nn.CrossEntropyLoss().to(device)
 
     model.eval()
@@ -54,11 +67,28 @@ def spatialsmoothingTest(model_path,  testloader, device, model):
         with torch.no_grad():
         #predictions = model(images).to(device)
             predictions_adv = model(smooth_images).to(device)
+        val_acc_batch = accuracy_fn(y_true=labels, y_pred=predictions_adv.argmax(dim=1))
+        val_loss_batch = loss_func(predictions_adv, labels)
+
+        
+        loss_per_batch.append(val_loss_batch.item())
+        plot_metrics_loss_batch(modelname, loss_per_batch, True)
+        acc_per_batch.append(val_acc_batch)
+        plot_metrics_acc_batch(modelname, acc_per_batch, True)
+        
         val_loss += loss_func(predictions_adv, labels)
-        val_acc_batch = torch.eq(labels, predictions_adv.argmax(dim=1)).sum().item()
-        print("Batch",i,":" ,val_acc_batch)
+        #val_acc_batch = torch.eq(labels, predictions_adv.argmax(dim=1)).sum().item()
+        #print("Batch",i,":" ,val_acc_batch)
         val_accuracy += accuracy_fn(y_true=labels, y_pred=predictions_adv.argmax(dim=1))
-        i+=1
     val_loss /= len(testloader)
     val_accuracy /= len(testloader)
+    print( "Loss: ", val_loss, "Acc: ",val_accuracy)
+
+    Path_checkpoint = "./model/metrics/"+modelname+"_test_Checkpoint.pth"
+
+    checkpoint = {
+            "Loss": val_loss,
+            "Acc": val_accuracy,
+        }
+    torch.save(checkpoint, Path_checkpoint)
     print("Loss: ", val_loss, "Acc.: ", val_accuracy)

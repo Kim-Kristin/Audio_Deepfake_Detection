@@ -149,7 +149,17 @@ def batches_display(batches):
     img_grid = torchvision.utils.make_grid(images)
     # show images
     image_display_spectrogram(img_grid, one_channel=False)
-    # write to tensorboard
+    
+def plot_signals(signals):
+    fig, axes = plt.subplots(nrows=2, ncols=1, sharex=False, sharey=True, figsize= (20,10))
+    fig.suptitle('Time Series', size=16)
+    i = 0
+    for x in range(2):
+        axes[x].set_title(list(signals.keys())[i])
+        axes[x].plot (list(signals. values ())[i])
+        axes[x].get_xaxis().set_visible (False)
+        axes[x].get_yaxis().set_visible(False)
+        i += 1
 
 def dataset(device):
     # read csv
@@ -167,9 +177,22 @@ def dataset(device):
         rate, signal = librosa.load(filename)
         df_clean.loc[f,'lenght'] = duration
 
+    #print(df_clean.lenght)
     classes = list(np.unique(df_clean.label))
     class_dist = df_clean.groupby(['label'])['lenght'].mean()
+    print("Unique Classes: ", classes)
+    
+    fig, ax = plt.subplots()
+    ax.set_title('Original Data: Class Distribution of Audiolenght', y=1.08)
+    ax.pie(class_dist, labels=class_dist.index, autopct='%1.1f%%',
+        shadow=False, startangle=90)
+    ax.axis('equal')
+    #plt.show()
+    plt.savefig("./data/outputs/dataset/orgdata_classdist.png")
+    plt.close()
+    
 
+    
     path_clean = './data/clean/'
     if os.path.exists(path_clean) is False:
             os.mkdir(path_clean)
@@ -192,6 +215,28 @@ def dataset(device):
                 signal, rate = librosa.load(path_audio+f+'.flac', sr=16000)
                 mask = envelope(signal, rate, 0.0005)
                 wavfile.write(filename=path_clean_b+f+'.flac', rate=rate, data=signal[mask])
+    
+    signals = {}
+
+    for c in classes:
+        #print(c)
+        wav_file = df_clean[df_clean.label == c].iloc[0,0] #test on one sample for each class
+        signal, rate = librosa.load(path_audio+wav_file+'.flac', sr=44100)
+        mask = envelope(signal, rate, 0.0005)
+        signal = signal[mask]
+        signals[c] = signal
+        #fft[c] = calc_fft(signal, rate)
+
+        #bank = logfbank(signal[: rate], rate, nfilt=26, nfft=1103).T
+        #fbank[c] = bank
+
+        #mel = mfcc(signal[: rate], rate, numcep=13, nfilt=26, nfft=1103).T
+        #mfccs[c] = mel
+
+    plot_signals(signals)
+    plt.savefig("./data/outputs/dataset/bon_spoof_ts.png")
+    plt.close()
+    #plt.show()
                 
     input_path_b = path_clean_b
     input_path_s = path_clean_s

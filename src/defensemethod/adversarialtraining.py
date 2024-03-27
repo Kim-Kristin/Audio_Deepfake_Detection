@@ -26,7 +26,7 @@ def accuracy_fn(y_true, y_pred):
 
 
 def AdversarialTraining(model, trainloader, device, path, modelname, filename):
-    epochs = 1
+    epochs = 10
     LEARNING_RATE = 0.001
     GRADIENT_MOMENTUM = 0.90
     loss_func = torch.nn.CrossEntropyLoss().to(device)
@@ -42,8 +42,6 @@ def AdversarialTraining(model, trainloader, device, path, modelname, filename):
         train_loss_normal, train_loss_adv = 0, 0
         train_loss, train_acc_epoch, train_acc = 0, 0, 0
         correct_adv, correct_normal, correct_total = 0, 0, 0
-        #show_images(epoch, x_tmp, adv_tmp, "./data/outputs/Images/")
-
 
         for i, (input, label) in tqdm(enumerate(trainloader,0)):
             input, label = input.to(device), label.to(device)
@@ -71,6 +69,7 @@ def AdversarialTraining(model, trainloader, device, path, modelname, filename):
             correct_total = correct_adv + correct_normal
             train_acc = (correct_total / (len(label)+ len(label))) * 100
             train_acc_epoch += train_acc
+            
         train_loss /= (len(trainloader)+ len(trainloader))
         #train_acc_epoch = (correct/ len(label_sum)) * 100
         train_acc_epoch /= (len(trainloader) + len(trainloader))
