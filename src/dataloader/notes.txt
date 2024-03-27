@@ -12,3 +12,8 @@ https://www.youtube.com/watch?v=gfhx4dr6gJQ&list=PLhA3b2k8R3t2Ng1WW_7MiXeh1pfQJQ
 https://zenodo.org/records/4835108
 https://github.com/piotrkawa/audio-deepfake-adversarial-attacks/blob/main/src/datasets/deepfake_asvspoof_dataset.py
 https://www.youtube.com/watch?v=gfhx4dr6gJQ&list=PLhA3b2k8R3t2Ng1WW_7MiXeh1pfQJQi_P&index=9
+
+
+
+#Spectrogram
+https://ai.hdm-stuttgart.de/news/2023/ki-im-audiobereich-grundlagen-signalverarbeitung-ml/
