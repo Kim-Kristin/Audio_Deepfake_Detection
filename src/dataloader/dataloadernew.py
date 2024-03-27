@@ -27,7 +27,6 @@ import librosa
 
 import seaborn as sns
 from tqdm import tqdm
-
 from torch.optim import Adam
 #import torchaudio
 from scipy.io import wavfile
@@ -117,6 +116,7 @@ def envelope(y, rate, threshold):
     y_mean = y.rolling(window=int(rate/10), min_periods=1, center=True).mean()
     for mean in y_mean:
         if mean > threshold:
+            #print(mean)
             mask.append(True)
         else:
             mask.append(False)
@@ -162,7 +162,20 @@ def plot_signals(signals):
         i += 1
 
 def dataset(device):
-    # read csv
+  
+    # readinag given csv file 
+    # and creating dataframe 
+    org_txt = pd.read_csv("./data/DF/CM/trial_metadata.txt", delimiter = "\t") 
+    print("Length Orginal txt-File: ", len(org_txt))
+    files = os.listdir('./data/flac')
+    # open file in write mode
+    with open(r'./data/DF/file.txt', 'w') as fp:
+        print("Extract Name of Audiofile")
+        for item in files:
+            # write each item on a new line
+            fp.write("%s\n" % item)
+        print('Done')
+    
     df_org = pd.read_csv("./data/DF/CM/trial_metadata2.csv", header= None, sep=";")
     df_clean = pd.DataFrame()
     df_clean['fName'] = df_org.iloc[:,1].values
@@ -175,6 +188,7 @@ def dataset(device):
         filename = path_audio+f+".flac"
         duration = librosa.get_duration(path=filename)
         rate, signal = librosa.load(filename)
+        #print(signal)
         df_clean.loc[f,'lenght'] = duration
 
     #print(df_clean.lenght)
@@ -191,6 +205,20 @@ def dataset(device):
     plt.savefig("./data/outputs/dataset/orgdata_classdist.png")
     plt.close()
     
+    signals_org = {}
+    path_audio_org= "./data/flac/"
+
+    for c in classes:
+        #print(c)
+        wav_file = df_clean[df_clean.label == c].iloc[0,0] #test on one sample for each class
+        signal, rate = librosa.load(path_audio_org+wav_file+'.flac', sr=44100)
+        mask = envelope(signal, rate, 0.0005)
+        signal = signal[mask]
+        signals_org[c] = signal
+
+    plot_signals(signals_org)
+    plt.savefig("./data/outputs/dataset/bon_spoof_org_ts.png")
+    plt.close()
 
     
     path_clean = './data/clean/'
@@ -211,10 +239,13 @@ def dataset(device):
                 signal, rate = librosa.load(path_audio+f+'.flac', sr=16000)
                 mask = envelope(signal, rate, 0.0005)
                 wavfile.write(filename=path_clean_s+f+'.flac', rate=rate, data=signal[mask])
+
             else:
                 signal, rate = librosa.load(path_audio+f+'.flac', sr=16000)
                 mask = envelope(signal, rate, 0.0005)
                 wavfile.write(filename=path_clean_b+f+'.flac', rate=rate, data=signal[mask])
+        
+        
     
     signals = {}
 
@@ -261,10 +292,11 @@ def dataset(device):
                 if df_clean.label[f] == "spoof":
                     sound = audio(input_path_s+f+'.flac')
                     sound.write_disk_spectrogram(output_path_s+f+".png", dpi=SPECTROGRAM_DPI)
+
                 else:
                     sound = audio(input_path_b+f+'.flac')
                     sound.write_disk_spectrogram(output_path_b+f+".png", dpi=SPECTROGRAM_DPI)
-
+    
     print(f'Length of spoof dataset: {len(os.listdir(output_path_s))}')
     print(f'Length of bonafide dataset: {len(os.listdir(output_path_b))}')
 

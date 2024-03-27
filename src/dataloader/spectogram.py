@@ -66,10 +66,22 @@ class audio():
         axes.specgram(waveform[0], Fs=self.sample_rate)
         plt.axis('off')
         plt.show(block=False)
+        
+    def plot_spectrogram_withaxis(self) -> None:
+        waveform = self.waveform.numpy()
+        _, axes = plt.subplots(1, 1)
+        axes.specgram(waveform[0], Fs=self.sample_rate)
+        plt.axis()
+        plt.xlabel('Time (seconds)')
+        plt.ylabel('Frequency (Hz)')
+        plt.tight_layout()
+        plt.show(block=False)
+        plt.savefig("./data/outputs/Images/example.png", dpi=SPECTROGRAM_DPI, bbox_inches='tight')
 
     def write_disk_spectrogram(self, path, dpi=SPECTROGRAM_DPI) -> None:
         self.plot_spectrogram()
+        #self.plot_spectrogram_withaxis()
         plt.savefig(path, dpi=dpi, bbox_inches='tight')
-        plt.close(all)
+        plt.close('all')
 
 
