@@ -102,48 +102,48 @@ def project_main (device, resnet18, resnet50):
         print("### Training ResNet18 ###")
         path_resnet18 = "./model/resnet18.pth"
         modelname_resnet18 = "_resnet18_"
-        train(resnet18, train_batches, device, path_resnet18, modelname_resnet18)
+        #train(resnet18, train_batches, device, path_resnet18, modelname_resnet18)
         
         print("\n")
         print("### Training Resnet50 ###")
         path_resnet50 = "./model/resnet50.pth"
         modelname_resnet50 = "_resnet50_"
-        train(resnet50, train_batches, device, path_resnet50, modelname_resnet50)
+        #train(resnet50, train_batches, device, path_resnet50, modelname_resnet50)
         
         print("\n")
         print("### Testing ResNet18 ###")
         print("### Normal Testing on ResNet18 ###")
         modelname_resnet18_test = "_resnet18_test_"
-        test(resnet18, val_batches, device, path_resnet18, modelname_resnet18_test)
+        #test(resnet18, val_batches, device, path_resnet18, modelname_resnet18_test)
         
         print("\n")
         print("### Adversarial Attack on ResNet18 ###")
         modelname_resnet18_test_aa = "_resnet18_test_aa_"
-        adversarialattack(path_resnet18, val_batches, device, resnet18, modelname_resnet18_test_aa)
+        #adversarialattack(path_resnet18, val_batches, device, resnet18, modelname_resnet18_test_aa)
 
         print("\n")
         print("### Testing ResNet50 ###")
         print("### Normal Testing on ResNet50 ###")
         modelname_resnet50_test = "_resnet50_test_"
-        test(resnet50, val_batches, device, path_resnet50, modelname_resnet50_test)
+        #test(resnet50, val_batches, device, path_resnet50, modelname_resnet50_test)
         
         print("\n")
         print("### Adversarial Attack on ResNet50 ###")
         modelname_resnet50_test_aa = "_resnet50_test_aa_"
-        adversarialattack(path_resnet50, val_batches, device, resnet50, modelname_resnet50_test_aa)
+        #adversarialattack(path_resnet50, val_batches, device, resnet50, modelname_resnet50_test_aa)
 
         # Defense Method
         print("\n")
         print("### Spatial Smoothing ###")
         print("### ResNet18 ###")
         modelname_resne18_test_smoothing = "_resnet18_smoothing_"
-        spatialsmoothingTest(path_resnet18, val_batches, device, resnet18,modelname_resne18_test_smoothing)
+        #spatialsmoothingTest(path_resnet18, val_batches, device, resnet18,modelname_resne18_test_smoothing)
 
         print("\n")
         print("### ResNet50 ###")
         modelname_resne50_test_smoothing = "_resnet50_smoothing_"
 
-        spatialsmoothingTest(path_resnet50, val_batches, device, resnet50, modelname_resne50_test_smoothing)
+        #spatialsmoothingTest(path_resnet50, val_batches, device, resnet50, modelname_resne50_test_smoothing)
 
         print("\n")
         print("### Adversarial Training ###")
