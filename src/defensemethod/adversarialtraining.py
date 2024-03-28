@@ -44,6 +44,7 @@ def AdversarialTraining(model, trainloader, device, path, modelname, filename):
         correct_adv, correct_normal, correct_total = 0, 0, 0
 
         for i, (input, label) in tqdm(enumerate(trainloader,0)):
+            
             input, label = input.to(device), label.to(device)
 
             predictions_normal = model(input).to(device)
@@ -70,9 +71,9 @@ def AdversarialTraining(model, trainloader, device, path, modelname, filename):
             train_acc = (correct_total / (len(label)+ len(label))) * 100
             train_acc_epoch += train_acc
             
-        train_loss /= (len(trainloader)+ len(trainloader))
+        train_loss /= (len(trainloader)*2)
         #train_acc_epoch = (correct/ len(label_sum)) * 100
-        train_acc_epoch /= (len(trainloader) + len(trainloader))
+        train_acc_epoch /= (len(trainloader))
         # Save losses & plot
         loss_per_epoch.append(train_loss.item())
         plot_metrics_loss(modelname, loss_per_epoch)
