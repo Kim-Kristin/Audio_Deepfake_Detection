@@ -102,7 +102,7 @@ def project_main (device, resnet18, resnet50):
         print("### Training ResNet18 ###")
         path_resnet18 = "./model/resnet18.pth"
         modelname_resnet18 = "_resnet18_"
-        #train(resnet18, train_batches, device, path_resnet18, modelname_resnet18)
+        train(resnet18, train_batches, device, path_resnet18, modelname_resnet18)
         
         print("\n")
         print("### Training Resnet50 ###")
@@ -137,7 +137,7 @@ def project_main (device, resnet18, resnet50):
         print("### Spatial Smoothing ###")
         print("### ResNet18 ###")
         modelname_resne18_test_smoothing = "_resnet18_smoothing_"
-        #spatialsmoothingTest(path_resnet18, val_batches, device, resnet18,modelname_resne18_test_smoothing)
+        spatialsmoothingTest(path_resnet18, val_batches, device, resnet18,modelname_resne18_test_smoothing)
 
         print("\n")
         print("### ResNet50 ###")
@@ -206,13 +206,13 @@ def project_main (device, resnet18, resnet50):
         print("### ResNet18 ###")
         modelname_resnet18 = "_resnet18_"
 
-        output = torch.load("./model/metrics/"+modelname_resnet18+"Checkpoint.pth")
-        print(output)
+        #output = torch.load("./model/metrics/"+modelname_resnet18+"Checkpoint.pth")
+        #print(output)
 
         print("### ResNet50 ###")
         modelname_resnet50 = "_resnet50_"
-        output = torch.load("./model/metrics/"+modelname_resnet50+"Checkpoint.pth")
-        print(output)
+        #output = torch.load("./model/metrics/"+modelname_resnet50+"Checkpoint.pth")
+        #print(output)
         
         print("### ResNet18 with Adversarial Training ###")
         modelname_resnet18_adv_train = "_resnet18_adv_train_"

@@ -11,7 +11,7 @@ sys.path.append('./src/metrics/plot/')
 sys.path.append('./src/metrics/acc/')
 
 
-from plot import plot_metrics_acc_batch, plot_metrics_loss_batch
+from plot import plot_metrics_acc_batch, plot_metrics_loss_batch, show_images
 
 
 def gaussianblur(images):
@@ -57,6 +57,7 @@ def spatialsmoothingTest(model_path,  testloader, device, model, modelname):
     loss_func = torch.nn.CrossEntropyLoss().to(device)
 
     model.eval()
+    i =0
     for images, labels in tqdm(testloader):
 
         images, labels = images.to(device), labels.to(device)
@@ -67,6 +68,9 @@ def spatialsmoothingTest(model_path,  testloader, device, model, modelname):
         with torch.no_grad():
         #predictions = model(images).to(device)
             predictions_adv = model(smooth_images).to(device)
+        show_images(i, images, smooth_images, "./data/outputs/smooth/")
+        show_images(i+1, adv_images, smooth_images, "./data/outputs/smooth/")
+
         val_acc_batch = accuracy_fn(y_true=labels, y_pred=predictions_adv.argmax(dim=1))
         val_loss_batch = loss_func(predictions_adv, labels)
 

@@ -19,7 +19,6 @@ def train(model, train_batches, device, path, modelname):
     GRADIENT_MOMENTUM = 0.90
     loss_func = torch.nn.CrossEntropyLoss().to(device)
     optimizer = torch.optim.SGD(model.parameters(), lr=LEARNING_RATE, momentum=GRADIENT_MOMENTUM)
-
     model.train()
 
     loss_per_epoch = []

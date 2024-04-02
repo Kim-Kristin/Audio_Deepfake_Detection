@@ -291,11 +291,11 @@ def dataset(device):
         for f in tqdm(df_clean.fName):
                 if df_clean.label[f] == "spoof":
                     sound = audio(input_path_s+f+'.flac')
-                    sound.write_disk_spectrogram(output_path_s+f+".png", dpi=SPECTROGRAM_DPI)
+                    sound.write_disk_spectrogram(output_path_s+f+".jpeg", dpi=SPECTROGRAM_DPI)
 
                 else:
                     sound = audio(input_path_b+f+'.flac')
-                    sound.write_disk_spectrogram(output_path_b+f+".png", dpi=SPECTROGRAM_DPI)
+                    sound.write_disk_spectrogram(output_path_b+f+".jpeg", dpi=SPECTROGRAM_DPI)
     
     print(f'Length of spoof dataset: {len(os.listdir(output_path_s))}')
     print(f'Length of bonafide dataset: {len(os.listdir(output_path_b))}')
@@ -335,6 +335,8 @@ def dataset(device):
     # Load validation dataset into batches
     val_batches = torch.utils.data.DataLoader(val_dataset,
                                             batch_size=batch_size*2,
+                                            shuffle=True,
+
                                             num_workers=NUM_WORKERS)
 
     # display 32 (batch_size*2) sample from the first validation batch

@@ -34,8 +34,6 @@ def AdversarialTraining(model, trainloader, device, path, modelname, filename):
 
     loss_per_epoch = []
     acc_per_epoch = []
-    batch_size = 16
-
     model.train()
 
     for epoch in range(epochs):
