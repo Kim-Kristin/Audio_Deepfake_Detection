@@ -4,7 +4,7 @@ import copy
 
 def gen_adv(input, label , model):
     model = model
-    model_cp = copy.deepcopy(model)
+    model_cp = copy.deepcopy(model) # Copy the Model because to not change the params
     for p in model_cp.parameters():
         p.requires_grad = False
     model_cp.eval()
