@@ -1,7 +1,5 @@
 import torch
 import torchattacks
-from torch.autograd import Variable
-from tqdm import tqdm
 import copy
 
 def gen_adv(input, label , model):

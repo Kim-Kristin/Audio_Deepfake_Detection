@@ -1,3 +1,6 @@
+#ResNet
+#https://github.com/dyhan0920/PyramidNet-PyTorch/blob/master/resnet.py
+#https://github.com/fra31/sparse-imperceivable-attacks/blob/master/resnet.py
 
 import torch
 import torch.nn as nn
@@ -117,6 +120,3 @@ def ResNet101():
 
 def ResNet152():
     return ResNet(Bottleneck, [3, 8, 36, 3])
-
-
-

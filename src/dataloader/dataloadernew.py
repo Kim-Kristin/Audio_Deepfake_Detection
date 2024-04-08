@@ -1,5 +1,18 @@
+
+#Dataset 
+#https://zenodo.org/records/4835108 -> Audio Data .flac
+#https://www.asvspoof.org/asvspoof2021/DF-keys-full.tar.gz -> metadata
+
+#Tutorials etc.
+#https://github.com/piotrkawa/audio-deepfake-adversarial-attacks/blob/main/src/datasets/deepfake_asvspoof_dataset.py
+#https://www.youtube.com/watch?v=gfhx4dr6gJQ&list=PLhA3b2k8R3t2Ng1WW_7MiXeh1pfQJQi_P&index=9
 #https://www.kaggle.com/code/utcarshagrawal/birdclef-audio-pytorch-tutorial
 #https://learn.microsoft.com/en-us/training/modules/intro-audio-classification-pytorch/4-speech-model
+#https://pytorch.org/tutorials/intermediate/speech_command_recognition_with_torchaudio.html#define-the-network
+#https://www.kaggle.com/code/utcarshagrawal/birdclef-audio-pytorch-tutorial/notebook
+#https://www.youtube.com/watch?v=gfhx4dr6gJQ&list=PLhA3b2k8R3t2Ng1WW_7MiXeh1pfQJQi_P&index=9
+
+
 
 # Import packages and custom functions
 import numpy as np
@@ -43,7 +56,7 @@ import acc
 
 import utils
 from config import config
-from spectogram import create_spectrogram_images, show_spectrogram, audio
+from spectogram import audio
 
 import warnings
 warnings.filterwarnings('ignore')
@@ -123,6 +136,7 @@ def dataset(device):
             fp.write("%s\n" % item)
         print('Done')
     
+    #load metadata and extract important information
     df_org = pd.read_csv("./data/DF/CM/trial_metadata2.csv", header= None, sep=";")
     df_clean = pd.DataFrame()
     df_clean['fName'] = df_org.iloc[:,1].values
@@ -136,23 +150,25 @@ def dataset(device):
         duration = librosa.get_duration(path=filename)
         rate, signal = librosa.load(filename)
         df_clean.loc[f,'lenght'] = duration
-
+    
+    #extract unique classes
     classes = list(np.unique(df_clean.label))
     class_dist = df_clean.groupby(['label'])['lenght'].mean()
     print("Unique Classes: ", classes)
     
+    # plot class distribution (audiolength)
     fig, ax = plt.subplots()
     ax.set_title('Original Data: Class Distribution of Audiolenght', y=1.08)
     ax.pie(class_dist, labels=class_dist.index, autopct='%1.1f%%',
         shadow=False, startangle=90)
     ax.axis('equal')
-    #plt.show()
     plt.savefig("./data/outputs/dataset/orgdata_classdist.png")
     plt.close()
     
     signals_org = {}
     path_audio_org= "./data/flac/"
 
+    #routine for plotting audiowave
     for c in classes:
         #print(c)
         wav_file = df_clean[df_clean.label == c].iloc[0,0] #test on one sample for each class
@@ -165,7 +181,7 @@ def dataset(device):
     plt.savefig("./data/outputs/dataset/bon_spoof_org_ts.png")
     plt.close()
 
-    
+    #clean audio directory
     path_clean = './data/clean/'
     if os.path.exists(path_clean) is False:
             os.mkdir(path_clean)
@@ -177,7 +193,7 @@ def dataset(device):
     if os.path.exists(path_clean_b) is False:
             os.mkdir(path_clean_b)
 
-
+    #sort audiofiles in clean directory
     if len(os.listdir(path_clean_s)) == 0:
         for f in tqdm(df_clean.fName):
             if df_clean.label[f] == "spoof":
@@ -190,12 +206,9 @@ def dataset(device):
                 mask = envelope(signal, rate, 0.0005)
                 wavfile.write(filename=path_clean_b+f+'.flac', rate=rate, data=signal[mask])
         
-        
-    
     signals = {}
-
+    #routine for plotting audiowave
     for c in classes:
-        #print(c)
         wav_file = df_clean[df_clean.label == c].iloc[0,0] #test on one sample for each class
         signal, rate = librosa.load(path_audio+wav_file+'.flac', sr=44100)
         mask = envelope(signal, rate, 0.0005)
@@ -210,6 +223,7 @@ def dataset(device):
     input_path_b = path_clean_b
     input_path_s = path_clean_s
 
+    # spectrogram directory
     path_images = './data/spec/'
     if os.path.exists(path_images) is False:
             os.mkdir(path_images)
@@ -223,8 +237,9 @@ def dataset(device):
 
     output_path_s = path_images_s
     output_path_b = path_images_b
-
     SPECTROGRAM_DPI = 90 # image quality of spectrograms
+    
+    #make spectrograms and sort sprectrogram in directory
     if len(os.listdir(output_path_s)) == 0:
         for f in tqdm(df_clean.fName):
                 if df_clean.label[f] == "spoof":

@@ -6,34 +6,19 @@ import sys
 sys.path.append('./src')
 sys.path.append('./src/dataloader')
 sys.path.append('./src/dataloader/new_resnet')
-sys.path.append('./src/dataloader')
-sys.path.append('./src/dataloader/ResNet_train')
-sys.path.append('./src/dataloader')
 sys.path.append('./src/dataloader/dataloadernew')
-
-sys.path.append('./src')
 sys.path.append('./src/metrics/')
 sys.path.append('./src/metrics/acc')
-
 sys.path.append('./src/training')
 sys.path.append('./src/training/train')
-
 sys.path.append('./src/testing')
 sys.path.append('./src/testing/testing')
 sys.path.append('./src/testing/attacks')
-
-
-sys.path.append('./src/utils')
-sys.path.append('./src/utils/utils')
-
-sys.path.append('./src')
 sys.path.append('./src/defensemethod/')
 sys.path.append('./src/defensemethod/adversarialtraining')
 sys.path.append('./src/defensemethod/spatialsmoothing')
-sys.path.append('./src/defensemethod/genadvexamples')
-
-sys.path.append('./src/utils/utils')
 sys.path.append('./src/utils/')
+sys.path.append('./src/utils/utils')
 sys.path.append('./src/utils/config')
 
 #custom moduls
@@ -45,7 +30,6 @@ from testing import test
 from attacks import adversarialattack
 from adversarialtraining import AdversarialTraining
 from spatialsmoothing import spatialsmoothingTest
-from genadvexamples import gen_adv
 import utils
 from config import config
 
@@ -406,5 +390,4 @@ def project_main (device, resnet18, resnet50):
 device = get_device()
 resnet18 = ResNet18().to(device)
 resnet50 = ResNet50().to(device)
-print(resnet50)
 project_main(device, resnet18, resnet50)
