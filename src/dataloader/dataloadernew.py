@@ -1,88 +1,45 @@
 #https://www.kaggle.com/code/utcarshagrawal/birdclef-audio-pytorch-tutorial
 #https://learn.microsoft.com/en-us/training/modules/intro-audio-classification-pytorch/4-speech-model
 
-# Import numpy library for numerical operations
+# Import packages and custom functions
 import numpy as np
-# Import torch library for building and training neural networks
 import torch
-# Import nn module from torch for building neural network layers
-from torch import nn
-# Import torch multiprocessing module for parallel processing
 import torch.multiprocessing
-# Import datasets and transforms modules from torchvision for loading and transforming image datasets
 from torchvision import datasets, transforms
-# Import torchvision library for image processing
 import torchvision
-# Import pyplot module from matplotlib for plotting graphs
 import matplotlib.pyplot as plt
-# Import tqdm module for displaying progress bars
 from tqdm.auto import tqdm
-# Import default_timer function from timeit for measuring time taken for model training
-from timeit import default_timer as timer
 import os
-
 import pandas as pd
 import matplotlib.pyplot as plt
 import librosa
-
-import seaborn as sns
 from tqdm import tqdm
-from torch.optim import Adam
-#import torchaudio
 from scipy.io import wavfile
-#from python_speech_features import mfcc, logfbank
 import torch.nn.functional as F
-
 from torch.utils.data import DataLoader, Dataset
-from torchvision import datasets, transforms
 import torch.nn.functional as F
-import torch.optim as optim
 
 
 import sys
 sys.path.append('./src')
 sys.path.append('./src/utils/')
-sys.path.append('./src')
 sys.path.append('./src/metrics/')
 sys.path.append('./src/metrics/acc')
-
 sys.path.append('./src/utils/utils')
 sys.path.append('./src/utils/')
 sys.path.append('./src/utils/config')
-sys.path.append('./src')
-
 sys.path.append('./src/dataloader')
 sys.path.append('./src/dataloader/dataloader')
-sys.path.append('./src/dataloader')
 sys.path.append('./src/dataloader/spectogram')
-
-sys.path.append('./src/dataloader')
 sys.path.append('./src/dataloader/new_resnet')
-sys.path.append('./src/dataloader')
 sys.path.append('./src/dataloader/ResNet_train')
-
-sys.path.append('./src')
-sys.path.append('./src/metrics/')
-sys.path.append('./src/metrics/acc')
-
-sys.path.append('./src/testing')
-sys.path.append('./src/testing/attacks')
-
-
-sys.path.append('./src')
 sys.path.append('./src/defensemethod/')
-sys.path.append('./src/defensemethod/adversarialtraining')
 sys.path.append('./src/defensemethod/spatialsmoothing')
-
-
 sys.path.append('./data')
 sys.path.append('./data/flac')
 
 from new_resnet import ResNet50
 import acc
-import attacks
-import adversarialtraining
-from spatialsmoothing  import median_smoothing, gaussianblur, spatialsmoothingTest
 
 import utils
 from config import config
@@ -92,19 +49,11 @@ import warnings
 warnings.filterwarnings('ignore')
 
 #Variables
-
-NUM_WORKERS = 0 # number of worker used when loading data into dataloader
-DATASET_PATH = './data/spec/' # path of our spectrogram dataset
-IMAGE_SIZE = (1024, 1024) # image size
-CHANNEL_COUNT = 3 # 3 channel as an image has 3 color (R,G,B)
-ATTRIBUTION = ["spoof", "bonafide"] # class labels exemple, we'll have 3 class in this exemple
-ACCURACY_THRESHOLD = 98 # accuracy at which to stop
+NUM_WORKERS = 0 
+DATASET_PATH = './data/spec/' 
 batch_size = 16
 
-
-# Define the data transformation, we will only use it to transform the image as tensor
-# adding noise, pitch shifting, time stretching are valid transformations that we you could use
-# see https://pytorch.org/audio/stable/transforms.html
+# Define the data transformation -> https://pytorch.org/audio/stable/transforms.html
 transform=transforms.Compose([transforms.Resize((32,32)),
                                   transforms.ToTensor(),
                                   transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
@@ -116,11 +65,9 @@ def envelope(y, rate, threshold):
     y_mean = y.rolling(window=int(rate/10), min_periods=1, center=True).mean()
     for mean in y_mean:
         if mean > threshold:
-            #print(mean)
             mask.append(True)
         else:
             mask.append(False)
-
     return mask
 
 """
@@ -188,10 +135,8 @@ def dataset(device):
         filename = path_audio+f+".flac"
         duration = librosa.get_duration(path=filename)
         rate, signal = librosa.load(filename)
-        #print(signal)
         df_clean.loc[f,'lenght'] = duration
 
-    #print(df_clean.lenght)
     classes = list(np.unique(df_clean.label))
     class_dist = df_clean.groupby(['label'])['lenght'].mean()
     print("Unique Classes: ", classes)
@@ -256,18 +201,11 @@ def dataset(device):
         mask = envelope(signal, rate, 0.0005)
         signal = signal[mask]
         signals[c] = signal
-        #fft[c] = calc_fft(signal, rate)
 
-        #bank = logfbank(signal[: rate], rate, nfilt=26, nfft=1103).T
-        #fbank[c] = bank
-
-        #mel = mfcc(signal[: rate], rate, numcep=13, nfilt=26, nfft=1103).T
-        #mfccs[c] = mel
 
     plot_signals(signals)
     plt.savefig("./data/outputs/dataset/bon_spoof_ts.png")
     plt.close()
-    #plt.show()
                 
     input_path_b = path_clean_b
     input_path_s = path_clean_s
@@ -311,42 +249,20 @@ def dataset(device):
     train_dataset, val_dataset = torch.utils.data.random_split(dataset, [train_size, val_size])
     print(f"{train_size} images for training, {val_size} images for validation")
 
-    #Traindataset
-    """trainx = []
-    trainy = []
-    for i, data in enumerate(train_dataset):
-        image, label = data
-        trainx.append(image.numpy())
-        trainy.append(np.array(label))
-
-    # Testdataset
-    testx = []
-    testy = []
-    for i, data in enumerate(val_dataset):
-        image, label = data
-        testx.append(image.numpy())
-        testy.append(np.array(label))"""
-
     # Load training dataset into batches
     train_batches = torch.utils.data.DataLoader(train_dataset,
                                             batch_size=batch_size,
-                                            shuffle=True,
+                                            drop_last= True,
+                                            shuffle=False,
                                             num_workers=NUM_WORKERS)
     # Load validation dataset into batches
     val_batches = torch.utils.data.DataLoader(val_dataset,
                                             batch_size=batch_size*2,
                                             shuffle=True,
-
+                                            drop_last= False,
                                             num_workers=NUM_WORKERS)
 
     # display 32 (batch_size*2) sample from the first validation batch
     batches_display(val_batches)
 
     return train_batches, val_batches
-
-
-# Calculates accuracy between truth labels and predictions.
-def accuracy_fn(y_true, y_pred):
-    correct = torch.eq(y_true, y_pred).sum().item()
-    acc = (correct / len(y_pred)) * 100
-    return acc

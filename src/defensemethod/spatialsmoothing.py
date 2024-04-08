@@ -1,6 +1,7 @@
+# Import Packages and custom functions
+
 import torch
 import torchvision
-from scipy import ndimage
 from tqdm import tqdm
 import torchattacks
 
@@ -19,22 +20,6 @@ def gaussianblur(images):
     transform = torchvision.transforms.GaussianBlur(kernel_size=(5,5), sigma=(0.1, 5.))
     blur_img = transform(images)
     return blur_img
-
-def median_smoothing(testloader,kernel_size=2):
-    # Smooth image by apllying median filter with kernel size (m*n). Use default kernel size of 2x2 as indicated by CW,
-    '''
-        Try to calculate median of given pixels inside of kernel window to normalize it's values.
-        The function can be used with batch or single image array by measuring its shape and thereby it's dimension.
-        The image data is casted into torch sensor because the scipy filter will change it's type otherwise to ndarray format.
-        Usage for batch: smoothed_batch = median_smoothing(original_batch)
-        Usage for single image: smoothed_image = median_smoothing(original_batch[index_of_image][0])
-    '''
-    for i , (images, labels) in enumerate(testloader,0):
-        img_data_median = torch.clone(images) #Clone tensor to protect original tensor data
-        for j in range(img_data_median.shape[0]):
-            for k in range(img_data_median.shape[1]): #RGB Values
-                    img_data_median[j][k] = torch.from_numpy(ndimage.median_filter(img_data_median[j][k], size=kernel_size)) #Use ndimage filter for CIFAR-10
-    return(img_data_median)
 
 def accuracy_fn(y_true, y_pred):
     correct = torch.eq(y_true, y_pred).sum().item()

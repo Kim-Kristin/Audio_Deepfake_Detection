@@ -1,5 +1,6 @@
+# Import Packages and custom functions
+
 import torch
-import torchattacks
 from tqdm import tqdm
 from torch.utils.data import TensorDataset
 
@@ -16,7 +17,6 @@ sys.path.append('./src/defensemethod/spatialsmoothing')
 sys.path.append('./src/defensemethod/genadvexamples')
 
 from plot import plot_metrics_loss, plot_metrics_acc, show_images
-import acc
 from genadvexamples import gen_adv
 
 def accuracy_fn(y_true, y_pred):
@@ -70,7 +70,6 @@ def AdversarialTraining(model, trainloader, device, path, modelname, filename):
             train_acc_epoch += train_acc
             
         train_loss /= (len(trainloader)*2)
-        #train_acc_epoch = (correct/ len(label_sum)) * 100
         train_acc_epoch /= (len(trainloader))
         # Save losses & plot
         loss_per_epoch.append(train_loss.item())
