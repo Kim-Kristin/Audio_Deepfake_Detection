@@ -8,16 +8,16 @@ This repository contains the code moduls and data for the assignment with the sa
 This master thesis investigates the topic of defense against black-box adversarial attacks on audio deepfake detection models. Existing research in this area shows that various detection models exist, with residual neural networks (ResNet) being frequently used in this context as they offer a high potential for success in detecting audio deepfakes. However, due to their architecture, they are susceptible to adversarial attacks that are indistinguishable from the original datasets. A good audio deepfake detection model should not only be robust against synthetic and converted audio data, but also counteract malicious attacks.
 The master thesis therefore proposes a solution for this task, which attempts to reduce the vulnerability of ResNet architectures (ResNet-18 and ResNet-50) for the detection of synthetic audio data, against black box attacks by means of adversarial training, spatial smoothing and a combination of both defense strategies. The models are trained and evaluated on the ASVSpoof sub-dataset "Speech Deepfake" from 2021. The results show that these two defense methods increase the robustness of both detection models under the used black-box adversarial attack "Pixle". The best results for both detection models are achieved with the combined defense strategy. An accuracy of 91.89% is achieved for the ResNet-18, while a comparison with the base models without defense strategy achieves an accuracy of 25.16%. An accuracy of 93.72 % is achieved for the ResNet-50, without defense this is 23.04 %.
 
-#### Components of the solution approach
+### Components of the solution approach
 
-##### Baseline Models
+#### Baseline Models
 - ResNet-18
 - ResNet-50
 
-##### Adversarial Attack 
+#### Adversarial Attack 
 - Pixle
 
-##### Defense Method
+#### Defense Method
 - Spatial Smoothing
 - Adversarial Training
 
