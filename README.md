@@ -18,7 +18,7 @@ The master thesis therefore proposes a solution for this task, which attempts to
 - Pixle
 
 #### Defense Method
-- Spatial Smoothing
+- Spatial Smoothing (Gaussian Blurring)
 - Adversarial Training
 
 
