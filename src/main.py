@@ -29,7 +29,7 @@ import dataloadernew
 from testing import test
 from attacks import adversarialattack
 from adversarialtraining import AdversarialTraining
-from spatialsmoothing import spatialsmoothingTest
+from spatialsmoothing import spatialsmoothingTest, spatialsmoothingTest_withoutattack
 import utils
 from config import config
 
@@ -234,14 +234,22 @@ def project_main (device, resnet18, resnet50):
         # Defense Method
         print("\n")
         print("### Spatial Smoothing ###")
-        print("### ResNet18 ###")
+        print("### ResNet18 with Adversarial Attack ###")
         modelname_resne18_test_smoothing = "_resnet18_smoothing_"
-        spatialsmoothingTest(path_resnet18, val_batches, device, resnet18 ,modelname_resne18_test_smoothing)
+        #spatialsmoothingTest(path_resnet18, val_batches, device, resnet18 ,modelname_resne18_test_smoothing)
+        
+        print("### ResNet18 without Adversarial Attack ###")
+        modelname_resne18_test_smoothing_withoutattack = "_resnet18_smoothing_woattack"
+        spatialsmoothingTest_withoutattack(path_resnet18, val_batches, device, resnet18 ,modelname_resne18_test_smoothing_withoutattack)
 
         print("\n")
-        print("### ResNet50 ###")
+        print("### ResNet50 with Adversarial Attack ###")
         modelname_resne50_test_smoothing = "_resnet50_smoothing_"
-        spatialsmoothingTest(path_resnet50, val_batches, device, resnet50, modelname_resne50_test_smoothing)
+        #spatialsmoothingTest(path_resnet50, val_batches, device, resnet50, modelname_resne50_test_smoothing)
+        
+        print("### ResNet50 without Adversarial Attack ###")
+        modelname_resne50_test_smoothing_withoutattack = "_resnet50_smoothing_woattack"
+        spatialsmoothingTest_withoutattack(path_resnet50, val_batches, device, resnet50 ,modelname_resne50_test_smoothing_withoutattack)
 
     elif user_input == 5:
         cls()
@@ -284,20 +292,25 @@ def project_main (device, resnet18, resnet50):
         train_batches, val_batches = dataloadernew.dataset(device)
         path_resnet18_adv_train = "./model/resnet18_adv_train.pth"
         path_resnet50_adv_train = "./model/resnet50_adv_train.pth"
-        
-        print("\n")
-        filename_resnet18 = "./data/data_advtrain/datar18.tar"
-        filename_resnet50 = "./data/data_advtrain/datar50.tar"
+
         
         print("\n")
         print("### Combine ResNet18 Adversarial Training with Spatial Smoothing ###")
         modelname_resne18_test_at_smoothing = "_resnet18_at_smoothing_"
-        spatialsmoothingTest(path_resnet18_adv_train, val_batches, device, resnet18,modelname_resne18_test_at_smoothing)
+        #spatialsmoothingTest(path_resnet18_adv_train, val_batches, device, resnet18,modelname_resne18_test_at_smoothing)
+
+        modelname_resne18_test_at_smoothing_woattack= "_resnet18_at_smoothing_woattack"
+        spatialsmoothingTest_withoutattack(path_resnet18_adv_train, val_batches, device, resnet18 ,modelname_resne18_test_at_smoothing_woattack)
+
         
         print("\n")
         print("### Combine ResNet50 Adversarial Training with Spatial Smoothing ###")
         modelname_resne50_test_at_smoothing = "_resnet50_at_smoothing_"
-        spatialsmoothingTest(path_resnet50_adv_train, val_batches, device, resnet50,modelname_resne50_test_at_smoothing)
+       #spatialsmoothingTest(path_resnet50_adv_train, val_batches, device, resnet50,modelname_resne50_test_at_smoothing)
+        
+        
+        modelname_resne50_test_at_smoothing_woattack= "_resnet50_at_smoothing_woattack"
+        spatialsmoothingTest_withoutattack(path_resnet50_adv_train, val_batches, device, resnet50 ,modelname_resne50_test_at_smoothing_woattack)
     
 
     elif user_input == 7:
