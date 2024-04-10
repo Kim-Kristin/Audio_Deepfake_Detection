@@ -31,7 +31,7 @@ The master thesis therefore proposes a solution for this task, which attempts to
 ## Development Setup 
 Precondition: Windows users can follow the official microsoft tutorial to install python, git and vscode here:
 
-​​- https://docs.microsoft.com/en-us/windows/python/beginners
+​​- english: https://docs.microsoft.com/en-us/windows/python/beginners
 - german: https://docs.microsoft.com/de-de/windows/python/beginners
 
 ### Visual Studio Code
@@ -51,7 +51,8 @@ or for Windows
 setup script `.\setup.ps1`
 ```
 
-### Troubleshooting: If this is not possible, please execute the following commands step by step in your command line from your development environment.
+##### Troubleshooting: If this is not possible, please execute the following commands step by step in your command line from your development environment.
+
 Then activate the python environment:
 
 For Linux or MacOS
