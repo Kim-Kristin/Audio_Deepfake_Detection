@@ -22,7 +22,7 @@ The master thesis therefore proposes a solution for this task, which attempts to
 - Adversarial Training
 
 #### Dataset - ASVspoof Challenge 2021
-- Audio data (flac): The audio data was downloaded from the offical website https://zenodo.org/records/4835108/files/ASVspoof2021_DF_eval_part00.tar.gz?download=1 (the solution is only based on a small sample not the whole dataset). The downloaded raw audio data can be found ![here](https://github.com/Kim-Kristin/Audio_Deepfake_Detection/tree/main/data/flac)
+- Audio data (flac): The audio data was downloaded from the offical website https://zenodo.org/records/4835108/files/ASVspoof2021_DF_eval_part00.tar.gz?download=1 (the solution is only based on a small sample not the whole dataset). The downloaded raw audio data can be found ![here](data/flac)
 - metadata: https://www.asvspoof.org/asvspoof2021/DF-keys-full.tar.gz 
 
 ### Main Module
