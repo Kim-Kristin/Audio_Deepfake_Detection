@@ -69,13 +69,13 @@ def project_main (device, resnet18, resnet50):
     print("5. Adversarial Training - ResNet18 and ResNet50")
     print("6. Adversarial Training and Spatial Smoothing - ResNet18 and  ResNet50")
     print("##########")
-    print("7. Call Checkpoints (Metrics - Losses and Acc) of all Models")
+    print("7. Call Checkpoints (Metrics - Losses and Acc) of all models")
     print("##########")
 
     user_input = int(input("Model:"))
     if user_input == 0:
         cls()
-        #call ResNet18 and ResNet50
+        
         print("### Loading Dataset ### ")
         train_batches, val_batches = dataloadernew.dataset(device)
         
@@ -143,12 +143,12 @@ def project_main (device, resnet18, resnet50):
 
         print("\n")
         print("### Testing ###")
-        print("### Normal Testing on ResNet18 ###")
+        print("### Testing ResNet18 with original data ###")
         modelname_resnet18_at_test = "_resnet18_at_test_"
         test(resnet18, val_batches, device, path_resnet18_adv_train, modelname_resnet18_at_test)
 
         print("\n")
-        print("### Testing with Adversarial Attack on ResNet18 ###")
+        print("### Testing ResNet18 with Adversarial Attack ###")
         modelname_resnet18_test_at_aa = "_resnet18_test_at_aa_"
         adversarialattack(path_resnet18_adv_train, val_batches, device, resnet18, modelname_resnet18_test_at_aa)
         
@@ -160,12 +160,12 @@ def project_main (device, resnet18, resnet50):
 
         
         print("\n")
-        print("### Normal Testing on ResNet50 ###")
+        print("### Testing ResNet50 with original data ###")
         modelname_resnet50_at_test = "_resnet50_at_test_"
         test(resnet50, val_batches, device, path_resnet50_adv_train, modelname_resnet50_at_test)
 
         print("\n")
-        print("### Testing with Adversarial Attack on ResNet50 ###")
+        print("### Testing ResNet50 with Adversarial Attack ###")
         modelname_resnet50_test_at_aa = "_resnet50_test_at_aa_"
         adversarialattack(path_resnet50_adv_train, val_batches, device, resnet50, modelname_resnet50_test_at_aa)
         
@@ -212,6 +212,7 @@ def project_main (device, resnet18, resnet50):
         cls()
         print("### Loading Dataset ### ")
         train_batches, val_batches = dataloadernew.dataset(device)
+        
         print("\n")
         path_resnet18 = "./model/resnet18.pth"
         path_resnet50 = "./model/resnet50.pth"
@@ -236,7 +237,7 @@ def project_main (device, resnet18, resnet50):
         print("### Spatial Smoothing ###")
         print("### ResNet18 with Adversarial Attack ###")
         modelname_resne18_test_smoothing = "_resnet18_smoothing_"
-        #spatialsmoothingTest(path_resnet18, val_batches, device, resnet18 ,modelname_resne18_test_smoothing)
+        spatialsmoothingTest(path_resnet18, val_batches, device, resnet18 ,modelname_resne18_test_smoothing)
         
         print("### ResNet18 without Adversarial Attack ###")
         modelname_resne18_test_smoothing_withoutattack = "_resnet18_smoothing_woattack"
@@ -245,7 +246,7 @@ def project_main (device, resnet18, resnet50):
         print("\n")
         print("### ResNet50 with Adversarial Attack ###")
         modelname_resne50_test_smoothing = "_resnet50_smoothing_"
-        #spatialsmoothingTest(path_resnet50, val_batches, device, resnet50, modelname_resne50_test_smoothing)
+        spatialsmoothingTest(path_resnet50, val_batches, device, resnet50, modelname_resne50_test_smoothing)
         
         print("### ResNet50 without Adversarial Attack ###")
         modelname_resne50_test_smoothing_withoutattack = "_resnet50_smoothing_woattack"
@@ -260,7 +261,7 @@ def project_main (device, resnet18, resnet50):
         print("\n")
         filename_resnet18 = "./data/data_advtrain/datar18.tar"
         filename_resnet50 = "./data/data_advtrain/datar50.tar"
-        
+        print("### Adversarial Training ###")
         print("### ResNet18 ###")
         path_resnet18_adv_train = "./model/resnet18_adv_train.pth"
         modelname_resnet18_adv_train = "_resnet18_adv_train_"
@@ -281,9 +282,19 @@ def project_main (device, resnet18, resnet50):
         adversarialattack(path_resnet18_adv_train, val_batches, device, resnet18, modelname_resnet18_test_at_aa)
         
         print("\n")
+        print("### Testing ResNet50 with original data ###")
+        modelname_resnet18_at_test = "_resnet18_at_test_"
+        test(resnet18, val_batches, device, path_resnet18_adv_train, modelname_resnet18_at_test)
+        
+        print("\n")
         print("### Testing with Adversarial Attack on ResNet50 ###")
         modelname_resnet50_test_at_aa = "_resnet50_test_at_aa_"
         adversarialattack(path_resnet50_adv_train, val_batches, device, resnet50, modelname_resnet50_test_at_aa)
+        
+        print("\n")
+        print("### Testing ResNet50 with original data ###")
+        modelname_resnet50_at_test = "_resnet50_at_test_"
+        test(resnet50, val_batches, device, path_resnet50_adv_train, modelname_resnet50_at_test)
 
     elif user_input == 6:
         cls()
@@ -297,8 +308,9 @@ def project_main (device, resnet18, resnet50):
         print("\n")
         print("### Combine ResNet18 Adversarial Training with Spatial Smoothing ###")
         modelname_resne18_test_at_smoothing = "_resnet18_at_smoothing_"
-        #spatialsmoothingTest(path_resnet18_adv_train, val_batches, device, resnet18,modelname_resne18_test_at_smoothing)
-
+        spatialsmoothingTest(path_resnet18_adv_train, val_batches, device, resnet18,modelname_resne18_test_at_smoothing)
+        
+        print("### Combine ResNet18 Adversarial Training with Spatial Smoothing with original data ###")
         modelname_resne18_test_at_smoothing_woattack= "_resnet18_at_smoothing_woattack"
         spatialsmoothingTest_withoutattack(path_resnet18_adv_train, val_batches, device, resnet18 ,modelname_resne18_test_at_smoothing_woattack)
 
@@ -306,8 +318,9 @@ def project_main (device, resnet18, resnet50):
         print("\n")
         print("### Combine ResNet50 Adversarial Training with Spatial Smoothing ###")
         modelname_resne50_test_at_smoothing = "_resnet50_at_smoothing_"
-       #spatialsmoothingTest(path_resnet50_adv_train, val_batches, device, resnet50,modelname_resne50_test_at_smoothing)
+        spatialsmoothingTest(path_resnet50_adv_train, val_batches, device, resnet50,modelname_resne50_test_at_smoothing)
         
+        print("### Combine ResNet50 Adversarial Training with Spatial Smoothing with original data ###")
         
         modelname_resne50_test_at_smoothing_woattack= "_resnet50_at_smoothing_woattack"
         spatialsmoothingTest_withoutattack(path_resnet50_adv_train, val_batches, device, resnet50 ,modelname_resne50_test_at_smoothing_woattack)
@@ -355,50 +368,78 @@ def project_main (device, resnet18, resnet50):
         output = torch.load("./model/metrics/"+modelname_resnet50_test+"test_Checkpoint.pth", map_location='cpu')
         print(output)
         
-        print("### ResNet18 - AA ###")
+        print("### ResNet18 - Adversarial Attack ###")
 
         output = torch.load("./model/metrics/_resnet18_test_aa_test_with_attack_Checkpoint.pth", map_location='cpu')
         print(output)
         
-        print("### ResNet50 - AA  ###")
+        print("### ResNet50 - Adversarial Attack ###")
         modelname_resnet50_test_aa = "_resnet50_test_aa_"
 
         output = torch.load("./model/metrics/_resnet50_test_aa_test_with_attack_Checkpoint.pth", map_location='cpu')
         print(output)       
         
         
-        print("### ResNet18 - Spatial Smoothing###")
+        print("### ResNet18 - Spatial Smoothing with Adversarial Attack ###")
         modelname_resne18_test_smoothing = "_resnet18_smoothing_"
 
         output = torch.load("./model/metrics/"+modelname_resne18_test_smoothing+"_test_Checkpoint.pth", map_location='cpu')
         print(output)
-
-        print("### ResNet50 - Spatial Smoothing ###")
+        
+        print("### ResNet18 - Spatial Smoothing without Adversarial Attack ###")
+        modelname_resne18_test_smoothing_withoutattack = "_resnet18_smoothing_woattack"
+        output = torch.load("./model/metrics/"+modelname_resne18_test_smoothing_withoutattack+"_test_Checkpoint.pth", map_location='cpu')
+        print(output)
+        
+        print("### ResNet50 - Spatial Smoothing with Adversarial Attack ###")
         modelname_resne50_test_smoothing = "_resnet50_smoothing_"
         output = torch.load("./model/metrics/"+modelname_resne50_test_smoothing+"_test_Checkpoint.pth", map_location='cpu')
         print(output)  
         
+        print("### ResNet50 - Spatial Smoothing without Adversarial Attack ###")
+        modelname_resne50_test_smoothing_withoutattack = "_resnet50_smoothing_woattack"
+        output = torch.load("./model/metrics/"+modelname_resne50_test_smoothing_withoutattack+"_test_Checkpoint.pth", map_location='cpu')
+        print(output)     
         
-        print("### ResNet18 with Adversarial Training ###")
+        print("### ResNet18 with Adversarial Training with Adversarial Attack ###")
         output = torch.load("./model/metrics/_resnet18_test_at_aa_test_with_attack_Checkpoint.pth", map_location='cpu')
         print(output)
+        
+        print("### ResNet18 with Adversarial Training with original data ###")
+        modelname_resnet18_at_test = "_resnet18_at_test_"
+        output = torch.load("./model/metrics/"+modelname_resnet18_at_test+"test_Checkpoint.pth", map_location='cpu')
+        print(output)
     
     
-        print("### ResNet50 with Adversarial Training ###")
+        print("### ResNet50 with Adversarial Training with Adversarial Attack ###")
         output = torch.load("./model/metrics/_resnet50_test_at_aa_test_with_attack_Checkpoint.pth", map_location='cpu')
         print(output)
+
+        print("### ResNet50 with Adversarial Training with original data ###")
+        modelname_resnet50_at_test = "_resnet50_at_test_"
+        output = torch.load("./model/metrics/"+modelname_resnet50_at_test+"test_Checkpoint.pth", map_location='cpu')
+        print(output)
         
-        
-        print("### ResNet18 with Adversarial Training + Spatial Smoothing###")
+        print("### ResNet18 with Adversarial Training + Spatial Smoothing with Adversarial Attack ###")
         modelname_resne18_test_at_smoothing = "_resnet18_at_smoothing_"
         output = torch.load("./model/metrics/"+modelname_resne18_test_at_smoothing+"_test_Checkpoint.pth", map_location='cpu')
         print(output)
         
-        print("### ResNet50 with Adversarial Training + Spatial Smoothing###")
+        print("### ResNet18 with Adversarial Training + Spatial Smoothing with original data ###")
+        modelname_resne18_test_at_smoothing_woattack= "_resnet18_at_smoothing_woattack"
+        output = torch.load("./model/metrics/"+modelname_resne18_test_at_smoothing_woattack+"_test_Checkpoint.pth", map_location='cpu')
+        print(output)        
+        
+        print("### ResNet50 with Adversarial Training + Spatial Smoothing with Adversarial Attack ###")
         modelname_resnet50_test_at_smoothing = "_resnet50_at_smoothing_"
         output = torch.load("./model/metrics/"+modelname_resnet50_test_at_smoothing+"_test_Checkpoint.pth", map_location='cpu')
         print(output)
         
+        print("### ResNet50 with Adversarial Training + Spatial Smoothing with original data ###")
+        
+        modelname_resne50_test_at_smoothing_woattack= "_resnet50_at_smoothing_woattack"
+        output = torch.load("./model/metrics/"+modelname_resne50_test_at_smoothing_woattack+"_test_Checkpoint.pth", map_location='cpu')
+        print(output)        
 
 device = get_device()
 resnet18 = ResNet18().to(device)

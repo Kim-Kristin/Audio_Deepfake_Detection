@@ -77,7 +77,7 @@ After your environment it setup, run the main.py to start the experiment.
 
 ## Results
 
-#### Training accuracy (%) and loss for the baselinemodels and the models with Adversarial Training
+#### Training accuracy (%) and loss for the baseline models and the models with adversarial training
 
 ![trainacc](https://github.com/Kim-Kristin/Audio_Deepfake_Detection/blob/main/data/results_readme/trainacc.png)
 ![trainloss](https://github.com/Kim-Kristin/Audio_Deepfake_Detection/blob/main/data/results_readme/trainloss.png)
