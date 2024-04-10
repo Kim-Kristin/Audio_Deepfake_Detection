@@ -62,3 +62,10 @@ pip install --upgrade pip
 pip install -r requirements.txt
 ```
 After your environment it setup, run the main.py to start the experiment.
+
+
+### Results
+
+#### Training accuracy (%) and loss for the baselinemodels and the models with Adversarial Training
+
+![trainacc](https://github.com/Kim-Kristin/Audio_Deepfake_Detection/blob/main/data/results_readme/trainacc.png)
