@@ -84,5 +84,6 @@ After your environment it setup, run the main.py to start the experiment.
 #### States of training and testing of all models
 The trained models with and without adversarial training can be found here.
 - [Saved_Models](https://github.com/Kim-Kristin/Audio_Deepfake_Detection/tree/main/model)
+
 The saved model states from the testing can be loaded to check the test results. To do this, execute the number 7 in main.py.
 - [Checkpoints](https://github.com/Kim-Kristin/Audio_Deepfake_Detection/tree/main/model/metrics)
