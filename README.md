@@ -75,3 +75,7 @@ After your environment it setup, run the main.py to start the experiment.
 #### Test accuracy (%) and loss for all models
  
 ![testaccloss](https://github.com/Kim-Kristin/Audio_Deepfake_Detection/blob/main/data/results_readme/testaccloss.png)
+
+#### Original vs. manipulated (pixle attack) vs. gaussian blurring
+
+![imagesspectrogram](https://github.com/Kim-Kristin/Audio_Deepfake_Detection/blob/main/data/results_readme/gaussiansmoothing.png)
