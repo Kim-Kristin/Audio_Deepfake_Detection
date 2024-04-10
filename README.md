@@ -18,11 +18,11 @@ The master thesis therefore proposes a solution for this task, which attempts to
 - Pixle
 
 #### Defense Method
-- Spatial Smoothing (Gaussian Blurring)
+- Spatial Smoothing (gaussian blur)
 - Adversarial Training
 
 #### Dataset - ASVspoof Challenge 2021
-- Audio data (flac): The audio data was downloaded from the offical website https://zenodo.org/records/4835108/files/ASVspoof2021_DF_eval_part00.tar.gz?download=1 (the solution is only based on a small sample not the whole dataset). The downloaded raw audio data can be found ![here](data/flac)
+- Audio data (flac): The audio data was downloaded from the offical website https://zenodo.org/records/4835108/files/ASVspoof2021_DF_eval_part00.tar.gz?download=1 (the solution is only based on a small sample not the whole dataset). The downloaded raw audio data can be found [here](data/flac)
 - metadata: https://www.asvspoof.org/asvspoof2021/DF-keys-full.tar.gz 
 
 ### Main Module
@@ -76,6 +76,13 @@ After your environment it setup, run the main.py to start the experiment.
  
 ![testaccloss](https://github.com/Kim-Kristin/Audio_Deepfake_Detection/blob/main/data/results_readme/testaccloss.png)
 
-#### Original vs. manipulated (pixle attack) vs. gaussian blurring
+#### Original vs. manipulated (pixle attack) vs. gaussian bluring
 
 ![imagesspectrogram](https://github.com/Kim-Kristin/Audio_Deepfake_Detection/blob/main/data/results_readme/gaussiansmoothing.png)
+
+
+#### States of training and testing of all models
+The trained models with and without adversarial training can be found here.
+- [Saved_Models](https://github.com/Kim-Kristin/Audio_Deepfake_Detection/tree/main/model)
+The saved model states from the testing can be loaded to check the test results. To do this, execute the number 7 in main.py.
+- [Checkpoints](https://github.com/Kim-Kristin/Audio_Deepfake_Detection/tree/main/model/metrics)
