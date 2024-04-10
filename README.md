@@ -3,31 +3,40 @@ Repository for Master Thesis about the Topic Abwehr von State-of-the-Art Black-B
 
 This repository contains the code moduls and data for the assignment with the same Topic.
 
-### Abstract
+## Abstract
 
 This master thesis investigates the topic of defense against black-box adversarial attacks on audio deepfake detection models. Existing research in this area shows that various detection models exist, with residual neural networks (ResNet) being frequently used in this context as they offer a high potential for success in detecting audio deepfakes. However, due to their architecture, they are susceptible to adversarial attacks that are indistinguishable from the original datasets. A good audio deepfake detection model should not only be robust against synthetic and converted audio data, but also counteract malicious attacks.
 The master thesis therefore proposes a solution for this task, which attempts to reduce the vulnerability of ResNet architectures (ResNet-18 and ResNet-50) for the detection of synthetic audio data, against black box attacks by means of adversarial training, spatial smoothing and a combination of both defense strategies. The models are trained and evaluated on the ASVSpoof sub-dataset "Speech Deepfake" from 2021. The results show that these two defense methods increase the robustness of both detection models under the used black-box adversarial attack "Pixle". The best results for both detection models are achieved with the combined defense strategy. An accuracy of 91.89% is achieved for the ResNet-18, while a comparison with the base models without defense strategy achieves an accuracy of 25.16%. An accuracy of 93.72 % is achieved for the ResNet-50, without defense this is 23.04 %.
 
-### Components of the solution approach
+## Components of the solution approach
 
-#### Baseline Models
+### Baseline Models
 - ResNet-18
 - ResNet-50
 
-#### Adversarial Attack 
+### Adversarial Attack 
 - Pixle
 
-#### Defense Method
+### Defense Method
 - Spatial Smoothing (gaussian blur)
 - Adversarial Training
 
-#### Dataset - ASVspoof Challenge 2021
+### Dataset - ASVspoof Challenge 2021
 - Audio data (flac): The audio data was downloaded from the offical website https://zenodo.org/records/4835108/files/ASVspoof2021_DF_eval_part00.tar.gz?download=1 (the solution is only based on a small sample not the whole dataset). The downloaded raw audio data can be found [here](data/flac)
 - metadata: https://www.asvspoof.org/asvspoof2021/DF-keys-full.tar.gz 
 
 ### Main Module
 -  [Main to Start the project](https://github.com/Kim-Kristin/Audio_Deepfake_Detection/blob/main/src/main.py)
 
+## Development Setup 
+Precondition: Windows users can follow the official microsoft tutorial to install python, git and vscode here:
+
+​​- https://docs.microsoft.com/en-us/windows/python/beginners
+- german: https://docs.microsoft.com/de-de/windows/python/beginners
+
+### Visual Studio Code
+
+This repository is optimized for Visual Studio Code. If VSCode is not yet installed follow the introductory videos at the above URL
 
 ### Requirements and Installation
 To setup your environment, run :
@@ -42,7 +51,7 @@ or for Windows
 setup script `.\setup.ps1`
 ```
 
-#### Troubleshooting: If this is not possible, please execute the following commands step by step in your command line from your development environment.
+### Troubleshooting: If this is not possible, please execute the following commands step by step in your command line from your development environment.
 Then activate the python environment:
 
 For Linux or MacOS
@@ -64,7 +73,7 @@ pip install -r requirements.txt
 After your environment it setup, run the main.py to start the experiment.
 
 
-### Results
+## Results
 
 #### Training accuracy (%) and loss for the baselinemodels and the models with Adversarial Training
 
