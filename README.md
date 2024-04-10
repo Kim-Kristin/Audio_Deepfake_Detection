@@ -31,7 +31,8 @@ The master thesis therefore proposes a solution for this task, which attempts to
 ## Development Setup 
 Precondition: Windows users can follow the official microsoft tutorial to install python, git and vscode here:
 
-​​- english: https://docs.microsoft.com/en-us/windows/python/beginners
+- english: https://docs.microsoft.com/en-us/windows/python/beginners
+
 - german: https://docs.microsoft.com/de-de/windows/python/beginners
 
 ### Visual Studio Code
@@ -86,7 +87,7 @@ After your environment it setup, run the main.py to start the experiment.
  
 ![testaccloss](https://github.com/Kim-Kristin/Audio_Deepfake_Detection/blob/main/data/results_readme/testaccloss.png)
 
-#### Original vs. manipulated (pixle attack) vs. gaussian bluring
+#### Original vs. manipulated (pixle attack) vs. gaussian blur
 
 ![imagesspectrogram](https://github.com/Kim-Kristin/Audio_Deepfake_Detection/blob/main/data/results_readme/gaussiansmoothing.png)
 
